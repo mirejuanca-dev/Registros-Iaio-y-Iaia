@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="Acompañamos"/>
+<meta name="theme-color" content="#0a0f1e"/>
+<title>Acompañamos Juntos</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{
+  --bg:#0a0f1e;
+  --card:rgba(255,255,255,0.04);
+  --border:rgba(255,255,255,0.08);
+  --accent:#c084fc;
+  --accent-glow:rgba(192,132,252,0.25);
+  --text:#f1f5f9;
+  --muted:#94a3b8;
+  --success:#34d399;
+  --danger:#f87171;
+  --warning:#fbbf24;
+  --isabel:#f472b6;
+  --tomas:#60a5fa;
+  --mercedes:#34d399;
+  --nuria:#fb923c;
+}
+html,body{height:100%;background:var(--bg);font-family:'DM Sans',sans-serif;color:var(--text);overflow-x:hidden}
+h1,h2,h3,.syne{font-family:'Syne',sans-serif}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.1);border-radius:2px}
+
+/* INPUTS */
+input,select,textarea{
+  background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);
+  color:var(--text);border-radius:10px;padding:11px 14px;
+  font-family:'DM Sans',sans-serif;font-size:15px;width:100%;outline:none;
+  -webkit-appearance:none;appearance:none;transition:border-color .2s;
+}
+input:focus,select:focus,textarea:focus{border-color:rgba(192,132,252,0.5);background:rgba(255,255,255,0.09)}
+select option{background:#1e1b4b;color:var(--text)}
+input[type=date]::-webkit-calendar-picker-indicator,
+input[type=time]::-webkit-calendar-picker-indicator{filter:invert(1) opacity(.4)}
+textarea{resize:vertical;min-height:80px}
+label{display:block;font-size:11px;color:var(--muted);font-weight:600;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:7px}
+
+/* BUTTONS */
+button{cursor:pointer;font-family:'DM Sans',sans-serif;border:none;transition:all .15s;-webkit-tap-highlight-color:transparent}
+.btn-primary{
+  background:linear-gradient(135deg,var(--accent),#818cf8);
+  color:#fff;border-radius:12px;padding:12px 24px;
+  font-family:'Syne',sans-serif;font-weight:700;font-size:14px;
+  box-shadow:0 4px 20px var(--accent-glow);
+}
+.btn-ghost{background:rgba(255,255,255,0.06);color:var(--muted);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:12px 20px;font-size:14px;font-weight:600}
+.btn-success{background:rgba(52,211,153,0.12);color:var(--success);border:1px solid rgba(52,211,153,0.25);border-radius:8px;padding:7px 14px;font-size:12px;font-weight:600}
+.btn-accent{background:rgba(192,132,252,0.12);color:var(--accent);border:1px solid rgba(192,132,252,0.25);border-radius:8px;padding:7px 14px;font-size:12px;font-weight:600}
+.btn-danger{background:rgba(248,113,113,0.12);color:var(--danger);border:1px solid rgba(248,113,113,0.25);border-radius:8px;padding:7px 14px;font-size:12px;font-weight:600}
+
+/* CARDS */
+.card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:18px}
+.card-glow{background:linear-gradient(135deg,rgba(192,132,252,0.08),rgba(129,140,248,0.04));border:1px solid rgba(192,132,252,0.2);border-radius:16px;padding:18px}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@keyframes slideIn{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:translateX(0)}}
+@keyframes toastIn{from{opacity:0;transform:translateX(-50%) translateY(-10px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+.fade-up{animation:fadeUp .35s ease both}
+.anim-delay-1{animation-delay:.05s}
+.anim-delay-2{animation-delay:.1s}
+.anim-delay-3{animation-delay:.15s}
+.anim-delay-4{animation-delay:.2s}
+
+/* LAYOUT */
+#app{max-width:680px;margin:0 auto;padding:0 16px;min-height:100vh}
+
+/* HEADER */
+.header{padding:env(safe-area-inset-top,24px) 0 20px;border-bottom:1px solid rgba(255,255,255,0.06);margin-bottom:22px;display:flex;justify-content:space-between;align-items:flex-start}
+.header-left .eyebrow{font-size:10px;color:var(--muted);font-weight:600;letter-spacing:2px;text-transform:uppercase;margin-bottom:5px}
+.header-left h1{font-size:26px;font-weight:800;line-height:1.15;color:var(--text)}
+.header-left h1 span{color:var(--accent)}
+.header-left .subtitle{font-size:12px;color:var(--muted);margin-top:7px}
+
+/* TABS */
+.tabs{display:flex;gap:3px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:14px;padding:4px;margin-bottom:22px}
+.tab{flex:1;padding:10px 4px;border:none;border-radius:10px;background:transparent;color:var(--muted);font-family:'Syne',sans-serif;font-weight:700;font-size:11px;display:flex;flex-direction:column;align-items:center;gap:3px;border-top:1px solid transparent;transition:all .2s}
+.tab.active{background:linear-gradient(135deg,rgba(192,132,252,0.15),rgba(129,140,248,0.08));color:var(--accent);border-top-color:rgba(192,132,252,0.35)}
+.tab .tab-icon{font-size:17px}
+
+/* STAT GRID */
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:22px}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:18px;position:relative;overflow:hidden}
+.stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px}
+.stat-card .stat-icon{font-size:22px;margin-bottom:8px}
+.stat-card .stat-value{font-family:'Syne',sans-serif;font-weight:800;font-size:30px;line-height:1}
+.stat-card .stat-label{font-size:12px;color:var(--muted);margin-top:4px;font-weight:500}
+.stat-card .stat-sub{font-size:11px;margin-top:3px;opacity:.85}
+
+/* PROXIMA */
+.proxima{border-radius:16px;padding:18px;margin-bottom:22px;position:relative;overflow:hidden}
+.proxima .prox-label{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px}
+.proxima .prox-fecha{font-family:'Syne',sans-serif;font-weight:800;font-size:20px;margin-bottom:6px}
+.proxima .prox-details{display:flex;gap:12px;flex-wrap:wrap;font-size:13px;color:#cbd5e1}
+
+/* TURNOS */
+.turnos-section{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px}
+.turnos-label{font-size:10px;color:var(--muted);font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:16px}
+.turno-row{margin-bottom:14px}
+.turno-row:last-child{margin-bottom:0}
+.turno-info{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px}
+.turno-name{font-family:'Syne',sans-serif;font-weight:600;font-size:14px;display:flex;align-items:center;gap:7px}
+.turno-dot{width:8px;height:8px;border-radius:50%}
+.turno-count{font-family:'Syne',sans-serif;font-weight:800;font-size:16px}
+.turno-bar-bg{background:rgba(255,255,255,0.06);border-radius:4px;height:6px;overflow:hidden}
+.turno-bar-fill{height:100%;border-radius:4px;transition:width .8s cubic-bezier(.34,1.56,.64,1)}
+.badge-next{font-size:10px;border-radius:20px;padding:2px 8px;font-weight:700}
+
+/* FILTERS */
+.filters{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap}
+.filter-btn{padding:5px 13px;border-radius:20px;border:1px solid rgba(255,255,255,0.1);background:transparent;color:var(--muted);font-size:11px;font-weight:600;transition:all .15s}
+
+/* VISITA CARD */
+.visita-card{background:var(--card);border:1px solid var(--border);border-radius:16px;margin-bottom:10px;overflow:hidden;transition:border-color .2s}
+.visita-card.open{border-color:rgba(192,132,252,0.3)}
+.visita-top-bar{height:3px}
+.visita-body{padding:14px 16px}
+.visita-header{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.visita-main{flex:1}
+.visita-tipo-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:8px}
+.visita-tipo{font-family:'Syne',sans-serif;font-weight:700;font-size:14px}
+.badge-paciente{font-size:11px;border-radius:20px;padding:2px 10px;font-weight:600;border:1px solid}
+.badge-realizada{font-size:10px;color:var(--success);background:rgba(52,211,153,0.1);border:1px solid rgba(52,211,153,0.2);border-radius:20px;padding:2px 8px}
+.badge-urgente{font-size:10px;color:var(--danger);background:rgba(248,113,113,0.1);border:1px solid rgba(248,113,113,0.2);border-radius:20px;padding:2px 8px}
+.visita-fecha{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.visita-dia{font-size:12px;color:var(--muted)}
+.visita-fecha-num{font-family:'Syne',sans-serif;font-weight:700;font-size:15px}
+.visita-hora{font-size:13px;color:var(--muted)}
+.visita-lugar{font-size:12px;color:var(--muted);margin-top:3px}
+.visita-medico{font-size:12px;color:var(--muted);margin-top:2px}
+.visita-right{display:flex;flex-direction:column;align-items:flex-end;gap:8px}
+.badge-acomp{display:flex;align-items:center;gap:6px;border-radius:20px;padding:4px 12px;border:1px solid}
+.badge-acomp-dot{width:6px;height:6px;border-radius:50%}
+.badge-acomp-name{font-size:12px;font-weight:600;font-family:'Syne',sans-serif}
+.toggle-btn{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:4px 10px;font-size:11px;color:var(--muted)}
+
+/* VISITA EXPANDIDA */
+.visita-expanded{margin-top:14px;border-top:1px solid rgba(255,255,255,0.06);padding-top:14px;animation:fadeUp .2s ease both}
+.expanded-label{font-size:10px;color:var(--muted);font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px}
+.expanded-text{font-size:13px;color:#cbd5e1;line-height:1.6}
+.expanded-resultado{background:rgba(255,255,255,0.04);padding:10px 12px;border-radius:10px;border-left:3px solid var(--success)}
+.expanded-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+
+/* FORM */
+.form-container{background:rgba(255,255,255,0.03);border:1px solid rgba(192,132,252,0.2);border-radius:20px;padding:22px;animation:fadeUp .3s ease both}
+.form-title{display:flex;align-items:center;gap:10px;margin-bottom:22px}
+.form-title-bar{width:4px;height:28px;background:linear-gradient(180deg,var(--accent),#818cf8);border-radius:2px}
+.form-title h3{font-family:'Syne',sans-serif;font-weight:800;font-size:18px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.form-grid .full{grid-column:1/-1}
+.btn-group{display:flex;gap:8px;flex-wrap:wrap}
+.btn-sel{padding:9px 16px;border-radius:10px;border:1.5px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.04);color:var(--muted);font-family:'DM Sans',sans-serif;font-weight:600;font-size:13px;transition:all .15s}
+.btn-sel.active{border-width:1.5px}
+.form-actions{display:flex;gap:10px;margin-top:22px}
+
+/* TOAST */
+#toast{position:fixed;top:calc(env(safe-area-inset-top,0px) + 16px);left:50%;transform:translateX(-50%);background:rgba(52,211,153,0.15);border:1px solid rgba(52,211,153,0.3);color:var(--success);padding:10px 20px;border-radius:12px;font-weight:600;font-size:13px;z-index:999;backdrop-filter:blur(10px);white-space:nowrap;display:none;animation:toastIn .3s ease both}
+
+/* EMPTY STATE */
+.empty{text-align:center;padding:50px 20px;color:var(--muted)}
+.empty-icon{font-size:40px;margin-bottom:12px}
+
+/* BG GLOW */
+.bg-glow{position:fixed;pointer-events:none;z-index:0}
+.bg-glow-1{top:-200px;right:-200px;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(192,132,252,0.07) 0%,transparent 70%)}
+.bg-glow-2{bottom:-100px;left:-100px;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(96,165,250,0.05) 0%,transparent 70%)}
+.content{position:relative;z-index:1;padding-bottom:40px}
+
+/* SAFE AREA */
+.pb-safe{padding-bottom:calc(env(safe-area-inset-bottom,0px) + 16px)}
+</style>
+</head>
+<body>
+
+<div class="bg-glow bg-glow-1"></div>
+<div class="bg-glow bg-glow-2"></div>
+<div id="toast"></div>
+
+<div id="app">
+  <div class="content">
+
+    <!-- HEADER -->
+    <div class="header">
+      <div class="header-left">
+        <div class="eyebrow">Registro familiar · Isabel</div>
+        <h1>Acompañamos<br><span>Juntos</span></h1>
+        <div class="subtitle">👴 Iaio Alfonso &nbsp;·&nbsp; 👵 Iaia Manolita</div>
+      </div>
+      <button class="btn-primary" onclick="openForm()" style="display:flex;align-items:center;gap:6px;white-space:nowrap">
+        <span style="font-size:18px;font-weight:300">+</span> Nueva
+      </button>
+    </div>
+
+    <!-- TABS -->
+    <div class="tabs">
+      <button class="tab active" id="tab-dashboard" onclick="setTab('dashboard')">
+        <span class="tab-icon">🏠</span>Inicio
+      </button>
+      <button class="tab" id="tab-pendientes" onclick="setTab('pendientes')">
+        <span class="tab-icon">⏳</span><span id="tab-pend-label">Pendientes</span>
+      </button>
+      <button class="tab" id="tab-historico" onclick="setTab('historico')">
+        <span class="tab-icon">📋</span><span id="tab-hist-label">Historial</span>
+      </button>
+    </div>
+
+    <!-- CONTENIDO -->
+    <div id="content-dashboard" class="tab-content"></div>
+    <div id="content-pendientes" class="tab-content" style="display:none"></div>
+    <div id="content-historico" class="tab-content" style="display:none"></div>
+    <div id="content-form" class="tab-content" style="display:none"></div>
+
+  </div>
+</div>
+
+<script>
+// ── DATOS ────────────────────────────────────────────────────────────────────
+const HIJOS = ['Isabel','Tomás','Mercedes','Nuria'];
+const COLORES = {Isabel:'#f472b6',Tomás:'#60a5fa',Mercedes:'#34d399',Nuria:'#fb923c'};
+const TIPOS = ['Consulta médica','Revisión','Control','Urgencias','Análisis','Prueba diagnóstica','Rehabilitación','Otro'];
+const TIPO_ICONS = {'Consulta médica':'🩺','Revisión':'🔍','Control':'📊','Urgencias':'🚨','Análisis':'🧪','Prueba diagnóstica':'🏥','Rehabilitación':'💪','Otro':'📋'};
+const LUGARES = ['CAP Gràcia','CAP Les Corts','Hospital Clínic','Vall d\'Hebron','Hospital del Mar','Hospital de Sant Pau','Centro de Salud','Urgencias','Otro'];
+const DIAS = ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
+
+const DEMO = [
+  {id:1,paciente:'Iaio Alfonso',acompanante:'Isabel',fecha:'2025-03-10',hora:'10:30',tipo:'Control',lugar:'Hospital Clínic',medico:'Dr. Martínez',observaciones:'Control cardíaco semestral.',resultado:'Resultados normales. Próxima revisión en 6 meses.',estado:'realizada'},
+  {id:2,paciente:'Iaia Manolita',acompanante:'Tomás',fecha:'2025-04-02',hora:'09:00',tipo:'Consulta médica',lugar:'CAP Gràcia',medico:'Dra. López',observaciones:'Revisión tensión arterial y medicación.',resultado:'Se ajusta dosis de enalapril.',estado:'realizada'},
+  {id:3,paciente:'Ambos',acompanante:'Mercedes',fecha:'2025-04-28',hora:'11:00',tipo:'Análisis',lugar:'CAP Les Corts',medico:'Enfermería',observaciones:'Analítica trimestral de rutina.',resultado:'Pendiente de resultados.',estado:'realizada'},
+  {id:4,paciente:'Iaio Alfonso',acompanante:'Nuria',fecha:'2025-05-20',hora:'12:00',tipo:'Revisión',lugar:'Vall d\'Hebron',medico:'Dr. Puig',observaciones:'Revisión traumatología rodilla derecha.',resultado:'',estado:'pendiente'},
+  {id:5,paciente:'Iaia Manolita',acompanante:'Isabel',fecha:'2025-06-05',hora:'10:00',tipo:'Control',lugar:'Hospital Clínic',medico:'Dra. Fernández',observaciones:'Control oftalmológico anual.',resultado:'',estado:'pendiente'},
+  {id:6,paciente:'Iaio Alfonso',acompanante:'Tomás',fecha:'2025-06-18',hora:'08:30',tipo:'Análisis',lugar:'CAP Les Corts',medico:'Enfermería',observaciones:'Analítica semestral.',resultado:'',estado:'pendiente'},
+];
+
+// ── ESTADO ────────────────────────────────────────────────────────────────────
+let visitas = [];
+let currentTab = 'dashboard';
+let editId = null;
+let filterH = 'Todos';
+let filterP = 'Todos';
+let openCards = {};
+
+function loadData() {
+  try { const s = localStorage.getItem('acomp_v2'); visitas = s ? JSON.parse(s) : DEMO; }
+  catch { visitas = DEMO; }
+}
+function saveData() {
+  localStorage.setItem('acomp_v2', JSON.stringify(visitas));
+}
+
+// ── HELPERS ───────────────────────────────────────────────────────────────────
+function fmt(f) { if(!f) return '—'; const [y,m,d]=f.split('-'); return `${d}/${m}/${y}`; }
+function diaSemana(f) { if(!f) return ''; return DIAS[new Date(f+'T12:00:00').getDay()]; }
+function getTurnos() {
+  const c={}; HIJOS.forEach(h=>c[h]=0);
+  visitas.filter(v=>v.estado==='realizada').forEach(v=>{ if(c[v.acompanante]!==undefined) c[v.acompanante]++; });
+  return c;
+}
+function getSugerido() {
+  const c={}; HIJOS.forEach(h=>c[h]=0);
+  visitas.forEach(v=>{ if(c[v.acompanante]!==undefined) c[v.acompanante]++; });
+  return HIJOS.reduce((a,b)=>c[a]<=c[b]?a:b);
+}
+function getPendientes() {
+  return visitas.filter(v=>v.estado==='pendiente')
+    .filter(v=>filterH==='Todos'||v.acompanante===filterH)
+    .filter(v=>filterP==='Todos'||v.paciente===filterP)
+    .sort((a,b)=>a.fecha.localeCompare(b.fecha));
+}
+function getHistorico() {
+  return visitas.filter(v=>v.estado==='realizada')
+    .filter(v=>filterH==='Todos'||v.acompanante===filterH)
+    .filter(v=>filterP==='Todos'||v.paciente===filterP)
+    .sort((a,b)=>b.fecha.localeCompare(a.fecha));
+}
+function colorPaciente(p) {
+  if(p==='Ambos') return {c:'#c084fc',bg:'rgba(192,132,252,0.15)',bc:'rgba(192,132,252,0.3)'};
+  if(p.includes('Alfonso')) return {c:'#60a5fa',bg:'rgba(96,165,250,0.15)',bc:'rgba(96,165,250,0.3)'};
+  return {c:'#f472b6',bg:'rgba(244,114,182,0.15)',bc:'rgba(244,114,182,0.3)'};
+}
+
+// ── TOAST ─────────────────────────────────────────────────────────────────────
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.style.display = 'block';
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=>t.style.display='none', 3000);
+}
+
+// ── TABS ──────────────────────────────────────────────────────────────────────
+function setTab(tab) {
+  currentTab = tab;
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c=>c.style.display='none');
+  const tabEl = document.getElementById('tab-'+tab);
+  if(tabEl) tabEl.classList.add('active');
+  document.getElementById('content-'+tab).style.display = 'block';
+  render();
+}
+
+// ── RENDER DASHBOARD ──────────────────────────────────────────────────────────
+function renderDashboard() {
+  const pend = visitas.filter(v=>v.estado==='pendiente').sort((a,b)=>a.fecha.localeCompare(b.fecha));
+  const hist = visitas.filter(v=>v.estado==='realizada');
+  const proxima = pend[0];
+  const turnos = getTurnos();
+  const sugerido = getSugerido();
+  const maxT = Math.max(...Object.values(turnos), 1);
+  const alfTotal = visitas.filter(v=>v.paciente.includes('Alfonso')||v.paciente==='Ambos').length;
+  const manoTotal = visitas.filter(v=>v.paciente.includes('Manolita')||v.paciente==='Ambos').length;
+
+  const proximaHTML = proxima ? `
+    <div class="card-glow proxima fade-up" style="margin-bottom:22px">
+      <div class="prox-label" style="color:var(--accent)">🔔 Próxima visita</div>
+      <div class="prox-fecha">${diaSemana(proxima.fecha)} ${fmt(proxima.fecha)}${proxima.hora?' · '+proxima.hora:''}</div>
+      <div class="prox-details" style="margin-top:6px">
+        <span>${TIPO_ICONS[proxima.tipo]||'📋'} ${proxima.tipo}</span>
+        <span style="color:${colorPaciente(proxima.paciente).c}">· ${proxima.paciente}</span>
+        ${proxima.lugar?`<span>· 📍 ${proxima.lugar}</span>`:''}
+      </div>
+      ${proxima.medico?`<div style="font-size:12px;color:var(--muted);margin-top:4px">👨‍⚕️ ${proxima.medico}</div>`:''}
+      <div style="margin-top:10px;display:flex;align-items:center;gap:8px">
+        <div style="width:8px;height:8px;border-radius:50%;background:${COLORES[proxima.acompanante]||'#c084fc'};box-shadow:0 0 6px ${COLORES[proxima.acompanante]||'#c084fc'}"></div>
+        <span style="font-size:13px;color:${COLORES[proxima.acompanante]||'#c084fc'};font-weight:600;font-family:Syne,sans-serif">Acompaña: ${proxima.acompanante}</span>
+      </div>
+    </div>` : '';
+
+  const turnosHTML = HIJOS.map(h=>{
+    const pct = maxT ? (turnos[h]/maxT)*100 : 0;
+    const color = COLORES[h];
+    const isNext = sugerido===h;
+    return `<div class="turno-row">
+      <div class="turno-info">
+        <div class="turno-name">
+          <div class="turno-dot" style="background:${color};box-shadow:0 0 6px ${color}"></div>
+          ${h}
+          ${isNext?`<span class="badge-next" style="background:${color}20;color:${color};border:1px solid ${color}44">← le toca</span>`:''}
+        </div>
+        <div class="turno-count" style="color:${color}">${turnos[h]}</div>
+      </div>
+      <div class="turno-bar-bg">
+        <div class="turno-bar-fill" style="width:${pct}%;background:linear-gradient(90deg,${color}88,${color});box-shadow:0 0 8px ${color}55"></div>
+      </div>
+    </div>`;
+  }).join('');
+
+  document.getElementById('content-dashboard').innerHTML = `
+    <div class="stat-grid">
+      <div class="stat-card fade-up" style="--delay:0s">
+        <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--warning)88,var(--warning))"></div>
+        <div class="stat-icon">⏳</div>
+        <div class="stat-value" style="color:var(--warning)">${pend.length}</div>
+        <div class="stat-label">Pendientes</div>
+        <div class="stat-sub" style="color:var(--warning)">${proxima?'Próx: '+fmt(proxima.fecha):'Sin pendientes 🎉'}</div>
+      </div>
+      <div class="stat-card fade-up anim-delay-1">
+        <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--success)88,var(--success))"></div>
+        <div class="stat-icon">✅</div>
+        <div class="stat-value" style="color:var(--success)">${hist.length}</div>
+        <div class="stat-label">Realizadas</div>
+        <div class="stat-sub" style="color:var(--success)">de ${visitas.length} totales</div>
+      </div>
+      <div class="stat-card fade-up anim-delay-2">
+        <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#60a5fa88,#60a5fa)"></div>
+        <div class="stat-icon">👴</div>
+        <div class="stat-value" style="color:#60a5fa">${alfTotal}</div>
+        <div class="stat-label">Iaio Alfonso</div>
+        <div class="stat-sub" style="color:#60a5fa">visitas totales</div>
+      </div>
+      <div class="stat-card fade-up anim-delay-3">
+        <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#f472b688,#f472b6)"></div>
+        <div class="stat-icon">👵</div>
+        <div class="stat-value" style="color:#f472b6">${manoTotal}</div>
+        <div class="stat-label">Iaia Manolita</div>
+        <div class="stat-sub" style="color:#f472b6">visitas totales</div>
+      </div>
+    </div>
+    ${proximaHTML}
+    <div class="turnos-section fade-up">
+      <div class="turnos-label">📊 Turnos realizados</div>
+      ${turnosHTML}
+    </div>
+  `;
+  document.getElementById('tab-pend-label').textContent = `Pendientes (${visitas.filter(v=>v.estado==='pendiente').length})`;
+  document.getElementById('tab-hist-label').textContent = `Historial (${hist.length})`;
+}
+
+// ── RENDER VISITA CARD ────────────────────────────────────────────────────────
+function renderVisitaCard(v, idx) {
+  const isPast = v.estado==='realizada';
+  const isUrgent = v.tipo==='Urgencias';
+  const color = COLORES[v.acompanante]||'#c084fc';
+  const icon = TIPO_ICONS[v.tipo]||'📋';
+  const cp = colorPaciente(v.paciente);
+  const isOpen = openCards[v.id];
+  const delay = Math.min(idx*0.05, 0.3);
+
+  const expandedHTML = isOpen ? `
+    <div class="visita-expanded">
+      ${v.observaciones?`<div style="margin-bottom:12px"><div class="expanded-label">Observaciones</div><div class="expanded-text">${v.observaciones}</div></div>`:''}
+      ${v.resultado?`<div style="margin-bottom:12px"><div class="expanded-label">Resultado médico</div><div class="expanded-resultado expanded-text">${v.resultado}</div></div>`:''}
+      <div class="expanded-actions">
+        ${!isPast?`<button class="btn-success" onclick="marcarRealizada(${v.id})">✓ Marcar realizada</button>`:''}
+        <button class="btn-accent" onclick="openForm(${v.id})">✏️ Editar</button>
+        <button class="btn-danger" onclick="eliminarVisita(${v.id})">🗑 Eliminar</button>
+      </div>
+    </div>` : '';
+
+  return `
+    <div class="visita-card ${isOpen?'open':''} fade-up" style="animation-delay:${delay}s;opacity:${isPast?0.78:1}">
+      <div class="visita-top-bar" style="background:${isPast?'rgba(255,255,255,0.08)':`linear-gradient(90deg,${color}66,${color})`}"></div>
+      <div class="visita-body">
+        <div class="visita-header">
+          <div class="visita-main">
+            <div class="visita-tipo-row">
+              <span style="font-size:18px">${icon}</span>
+              <span class="visita-tipo" style="color:${isUrgent?'var(--danger)':'var(--text)'}">${v.tipo}</span>
+              <span class="badge-paciente" style="color:${cp.c};background:${cp.bg};border-color:${cp.bc}">${v.paciente}</span>
+              ${isPast?'<span class="badge-realizada">✓ realizada</span>':''}
+              ${isUrgent&&!isPast?'<span class="badge-urgente">🚨 urgente</span>':''}
+            </div>
+            <div class="visita-fecha">
+              <span class="visita-dia">${diaSemana(v.fecha)}</span>
+              <span class="visita-fecha-num">${fmt(v.fecha)}</span>
+              ${v.hora?`<span class="visita-hora">· ${v.hora}</span>`:''}
+            </div>
+            ${v.lugar?`<div class="visita-lugar">📍 ${v.lugar}</div>`:''}
+            ${v.medico?`<div class="visita-medico">👨‍⚕️ ${v.medico}</div>`:''}
+          </div>
+          <div class="visita-right">
+            <div class="badge-acomp" style="background:${color}15;border-color:${color}33">
+              <div class="badge-acomp-dot" style="background:${color};box-shadow:0 0 4px ${color}"></div>
+              <span class="badge-acomp-name" style="color:${color}">${v.acompanante}</span>
+            </div>
+            <button class="toggle-btn" onclick="toggleCard(${v.id})">${isOpen?'▲':'▼'}</button>
+          </div>
+        </div>
+        ${expandedHTML}
+      </div>
+    </div>`;
+}
+
+// ── RENDER FILTROS ────────────────────────────────────────────────────────────
+function renderFiltros(showPaciente=true) {
+  const hijosBtns = ['Todos',...HIJOS].map(h=>{
+    const color = COLORES[h]||'var(--accent)';
+    const active = filterH===h;
+    return `<button class="filter-btn" onclick="setFilterH('${h}')" style="${active?`border-color:${color};background:${color}18;color:${color}`:''}">${h}</button>`;
+  }).join('');
+
+  const pacBtns = showPaciente ? ['Todos','Iaio Alfonso','Iaia Manolita','Ambos'].map(p=>{
+    const active = filterP===p;
+    const label = p==='Todos'?'👴👵 Todos':p.split(' ')[1]||p;
+    return `<button class="filter-btn" onclick="setFilterP('${p}')" style="${active?'border-color:var(--accent);background:rgba(192,132,252,0.15);color:var(--accent)':''}">${label}</button>`;
+  }).join('') : '';
+
+  return `<div class="filters">${hijosBtns}${pacBtns}</div>`;
+}
+
+function setFilterH(h) { filterH=h; render(); }
+function setFilterP(p) { filterP=p; render(); }
+
+// ── RENDER PENDIENTES ─────────────────────────────────────────────────────────
+function renderPendientes() {
+  const lista = getPendientes();
+  const cardsHTML = lista.length===0
+    ? `<div class="empty fade-up"><div class="empty-icon">🎉</div><div>Sin visitas pendientes</div></div>`
+    : lista.map((v,i)=>renderVisitaCard(v,i)).join('');
+  document.getElementById('content-pendientes').innerHTML = renderFiltros(true)+cardsHTML;
+}
+
+// ── RENDER HISTORICO ──────────────────────────────────────────────────────────
+function renderHistorico() {
+  const lista = getHistorico();
+  const cardsHTML = lista.length===0
+    ? `<div class="empty fade-up"><div class="empty-icon">📋</div><div>Sin historial todavía</div></div>`
+    : lista.map((v,i)=>renderVisitaCard(v,i)).join('');
+  document.getElementById('content-historico').innerHTML = renderFiltros(false)+cardsHTML;
+}
+
+// ── RENDER FORM ───────────────────────────────────────────────────────────────
+function openForm(id=null) {
+  editId = id;
+  const v = id ? visitas.find(x=>x.id===id) : null;
+  const sugerido = getSugerido();
+
+  const pacientes = ['Iaio Alfonso','Iaia Manolita','Ambos'];
+  const pacBtns = pacientes.map(p=>`
+    <button class="btn-sel ${(v?.paciente||'Iaio Alfonso')===p?'active':''}" onclick="selBtn('paciente','${p}',this)" data-val="${p}"
+      style="${(v?.paciente||'Iaio Alfonso')===p?`border-color:${colorPaciente(p).c};background:${colorPaciente(p).bg};color:${colorPaciente(p).c}`:''}">
+      ${p}
+    </button>`).join('');
+
+  const acompBtns = HIJOS.map(h=>`
+    <button class="btn-sel ${(v?.acompanante||sugerido)===h?'active':''}" onclick="selBtn('acompanante','${h}',this)" data-val="${h}"
+      style="${(v?.acompanante||sugerido)===h?`border-color:${COLORES[h]};background:${COLORES[h]}18;color:${COLORES[h]}`:''}">
+      ${h}
+    </button>`).join('');
+
+  const estadoBtns = ['pendiente','realizada'].map(e=>`
+    <button class="btn-sel ${(v?.estado||'pendiente')===e?'active':''}" onclick="selBtn('estado','${e}',this)" data-val="${e}"
+      style="${(v?.estado||'pendiente')===e?`border-color:${e==='realizada'?'var(--success)':'var(--warning)'};background:${e==='realizada'?'rgba(52,211,153,0.12)':'rgba(251,191,36,0.12)'};color:${e==='realizada'?'var(--success)':'var(--warning)'}`:''}"  >
+      ${e==='pendiente'?'⏳ Pendiente':'✅ Realizada'}
+    </button>`).join('');
+
+  const lugarOpts = LUGARES.map(l=>`<option ${v?.lugar===l?'selected':''}>${l}</option>`).join('');
+  const tipoOpts = TIPOS.map(t=>`<option ${(v?.tipo||'Consulta médica')===t?'selected':''}>${t}</option>`).join('');
+
+  document.getElementById('content-form').innerHTML = `
+    <div class="form-container">
+      <div class="form-title">
+        <div class="form-title-bar"></div>
+        <h3>${id?'Editar visita':'Nueva visita'}</h3>
+      </div>
+      <div class="form-grid">
+        <div class="full">
+          <label>👤 Paciente</label>
+          <div class="btn-group" id="grp-paciente">${pacBtns}</div>
+        </div>
+        <div class="full">
+          <label>🧑‍🤝‍🧑 Acompañante <span style="color:var(--success);font-size:10px;text-transform:none;letter-spacing:0">· sugerido: ${sugerido}</span></label>
+          <div class="btn-group" id="grp-acompanante">${acompBtns}</div>
+        </div>
+        <div>
+          <label>📅 Fecha</label>
+          <input type="date" id="f-fecha" value="${v?.fecha||''}"/>
+        </div>
+        <div>
+          <label>🕐 Hora</label>
+          <input type="time" id="f-hora" value="${v?.hora||''}"/>
+        </div>
+        <div>
+          <label>🏥 Tipo</label>
+          <select id="f-tipo">${tipoOpts}</select>
+        </div>
+        <div>
+          <label>📍 Lugar</label>
+          <select id="f-lugar" onchange="toggleOtroLugar()">
+            <option value="">Seleccionar...</option>
+            ${lugarOpts}
+          </select>
+        </div>
+        <div class="full" id="lugar-custom-wrap" style="display:none">
+          <label>📍 Especificar lugar</label>
+          <input id="f-lugar-custom" placeholder="Nombre del centro..." value="${v?.lugarCustom||''}"/>
+        </div>
+        <div class="full">
+          <label>👨‍⚕️ Médico / Especialista</label>
+          <input id="f-medico" placeholder="Dr. / Dra. ..." value="${v?.medico||''}"/>
+        </div>
+        <div class="full">
+          <label>📝 Observaciones previas</label>
+          <textarea id="f-obs" placeholder="Motivo, documentación a llevar, indicaciones...">${v?.observaciones||''}</textarea>
+        </div>
+        <div class="full">
+          <label>📋 Resultado / Notas médicas <span style="color:#475569;font-size:10px;text-transform:none;letter-spacing:0">· rellenar después</span></label>
+          <textarea id="f-resultado" placeholder="Diagnóstico, medicación nueva, próximas citas...">${v?.resultado||''}</textarea>
+        </div>
+        <div class="full">
+          <label>Estado</label>
+          <div class="btn-group" id="grp-estado">${estadoBtns}</div>
+        </div>
+      </div>
+      <div class="form-actions">
+        <button class="btn-primary" onclick="saveVisita()">💾 Guardar visita</button>
+        <button class="btn-ghost" onclick="cancelForm()">Cancelar</button>
+      </div>
+    </div>`;
+
+  // Mostrar form
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c=>c.style.display='none');
+  document.getElementById('content-form').style.display='block';
+  currentTab='form';
+
+  // Check lugar custom
+  if(v?.lugar==='Otro') toggleOtroLugar();
+}
+
+// Selección de botones en el form
+const formVals = {paciente:'Iaio Alfonso',acompanante:'',estado:'pendiente'};
+function selBtn(field, val, btn) {
+  const grp = btn.closest('.btn-group');
+  grp.querySelectorAll('.btn-sel').forEach(b=>{
+    b.classList.remove('active');
+    b.style.borderColor='rgba(255,255,255,0.1)';
+    b.style.background='rgba(255,255,255,0.04)';
+    b.style.color='var(--muted)';
+  });
+  btn.classList.add('active');
+  formVals[field] = val;
+  // Color activo
+  if(field==='paciente'){const cp=colorPaciente(val);btn.style.borderColor=cp.c;btn.style.background=cp.bg;btn.style.color=cp.c;}
+  else if(field==='acompanante'){const c=COLORES[val];btn.style.borderColor=c;btn.style.background=c+'18';btn.style.color=c;}
+  else if(field==='estado'){
+    const c=val==='realizada'?'var(--success)':'var(--warning)';
+    const bg=val==='realizada'?'rgba(52,211,153,0.12)':'rgba(251,191,36,0.12)';
+    btn.style.borderColor=c;btn.style.background=bg;btn.style.color=c;
+  }
+}
+
+function toggleOtroLugar() {
+  const sel = document.getElementById('f-lugar');
+  const wrap = document.getElementById('lugar-custom-wrap');
+  if(sel && wrap) wrap.style.display = sel.value==='Otro'?'block':'none';
+}
+
+function saveVisita() {
+  const paciente = document.querySelector('#grp-paciente .btn-sel.active')?.dataset.val || 'Iaio Alfonso';
+  const acompanante = document.querySelector('#grp-acompanante .btn-sel.active')?.dataset.val || '';
+  const estado = document.querySelector('#grp-estado .btn-sel.active')?.dataset.val || 'pendiente';
+  const fecha = document.getElementById('f-fecha')?.value||'';
+  const tipo = document.getElementById('f-tipo')?.value||'Consulta médica';
+  if(!paciente||!acompanante||!fecha||!tipo){alert('Rellena: paciente, acompañante, fecha y tipo.');return;}
+  const lugarSel = document.getElementById('f-lugar')?.value||'';
+  const lugar = lugarSel==='Otro'?(document.getElementById('f-lugar-custom')?.value||''):lugarSel;
+  const v = {
+    id: editId||Date.now(), paciente, acompanante, estado, fecha, tipo, lugar,
+    hora: document.getElementById('f-hora')?.value||'',
+    medico: document.getElementById('f-medico')?.value||'',
+    observaciones: document.getElementById('f-obs')?.value||'',
+    resultado: document.getElementById('f-resultado')?.value||'',
+  };
+  if(editId) { visitas = visitas.map(x=>x.id===editId?v:x); showToast('✏️ Visita actualizada'); }
+  else { visitas = [v,...visitas]; showToast('✅ Visita guardada'); }
+  saveData(); editId=null;
+  setTab('pendientes');
+}
+
+function cancelForm() { editId=null; setTab(currentTab==='form'?'dashboard':currentTab); }
+
+function toggleCard(id) {
+  openCards[id] = !openCards[id];
+  render();
+}
+
+function marcarRealizada(id) {
+  visitas = visitas.map(v=>v.id===id?{...v,estado:'realizada'}:v);
+  saveData(); openCards[id]=false; showToast('✓ Marcada como realizada'); render();
+}
+
+function eliminarVisita(id) {
+  if(!confirm('¿Eliminar esta visita?')) return;
+  visitas = visitas.filter(v=>v.id!==id);
+  saveData(); delete openCards[id]; showToast('🗑 Eliminada'); render();
+}
+
+// ── RENDER PRINCIPAL ──────────────────────────────────────────────────────────
+function render() {
+  if(currentTab==='dashboard') renderDashboard();
+  else if(currentTab==='pendientes') renderPendientes();
+  else if(currentTab==='historico') renderHistorico();
+}
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+loadData();
+render();
+</script>
+</body>
+</html>
